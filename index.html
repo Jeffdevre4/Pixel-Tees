@@ -21,6 +21,8 @@
             border: 2px solid;
             border-image: linear-gradient(to bottom right, blue, red) 1;
             animation: gradient-border 3s infinite;
+            position: relative;
+            z-index: 2; /* Ensure this is above the background images */
         }
 
         h1 {
@@ -46,6 +48,29 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #007BFF;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-links a:hover::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #007BFF;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
         }
 
         .cart {
@@ -133,7 +158,7 @@
 
         .sobre-a-loja .texto {
             flex: 2;
-            color: #007BFF;
+            color: #0056b3;
         }
 
         .produtos {
@@ -181,7 +206,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007BFF;
+            background-color: #ff0000;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -223,20 +248,12 @@
         }
 
         @media (max-width: 1024px) {
-            .sobre-a-loja {
-                flex-direction: column;
-            }
-
             .produto {
-                flex: 1 1 100%;
+                flex: 1 1 calc(50% - 20px);
             }
         }
 
         @media (max-width: 640px) {
-            .sobre-a-loja {
-                flex-direction: column;
-            }
-
             .produto {
                 flex: 1 1 100%;
             }
@@ -245,111 +262,215 @@
                 flex-direction: column;
             }
         }
+
+        .fixed-images {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1; /* Ensure these are behind the content */
+        }
+
+        .left-image {
+            left: 0;
+        }
+
+        .right-image {
+            right: 0;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #007BFF;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
+    <div class="fixed-images left-image">
+        <img src="./stree.webp" alt="Imagem Lateral Esquerda">
+    </div>
+    
 <div class="container">
     <header class="header">
         <h1>Pixel Tees</h1>
+        <div class="nav-links">
+            <a href="#" onclick="scrollToSection('sobre-a-loja')">Sobre a Loja</a>
+            <div class="dropdown">
+                <a href="#">Produtos</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="scrollToSection('camisetas')">Camisetas</a>
+                    <a href="#" onclick="scrollToSection('blusas')">Blusas</a>
+                    <a href="#" onclick="scrollToSection('calcas')">Calças</a>
+                </div>
+            </div>
+        </div>
         <div class="cart" onclick="toggleCartMenu()">
             <span class="cart-icon">🛒</span>
             <span id="cart-count">0</span>
             <div class="cart-menu" id="cart-menu">
-                <ul id="cart-items">
-                    <li id="empty-cart-message">Carrinho está vazio</li>
-                </ul>
+                <ul id="cart-items"></ul>
+                <p id="empty-cart-message">O carrinho está vazio</p>
             </div>
         </div>
     </header>
 
-    <section class="section sobre-a-loja">
-        <div>
-            <img src="./de6c9ad9917cc7606cce858fad985e45.jpg" alt="Imagem da Loja">
-        </div>
+    <section class="section sobre-a-loja" id="sobre-a-loja">
+        <img src="./de6c9ad9917cc7606cce858fad985e45.jpg" alt="Imagem da Loja">
         <div class="texto">
-            <h2>S͢o͢b͢r͢e͢ P͢i͢x͢e͢l͢ T͢e͢e͢s͢</h2>
-            <p>𝓐 𝓟𝓲𝔁𝓮𝓵 𝓣𝓮𝓮𝓼 𝓪𝓫𝓻𝓲𝓾 𝓼𝓾𝓪𝓼 𝓹𝓸𝓻𝓽𝓪𝓼 𝓿𝓲𝓻𝓽𝓾𝓪𝓲𝓼, 𝓽𝓻𝓪𝔃𝓮𝓷𝓭𝓸 𝓪𝓸 𝓹ú𝓫𝓵𝓲𝓬𝓸 𝓾𝓶𝓪 𝓬𝓸𝓵𝓮çã𝓸 𝓮𝔁𝓬𝓵𝓾𝓼𝓲𝓿𝓪 𝓭𝓮 𝓬𝓪𝓶𝓲𝓼𝓮𝓽𝓪𝓼 𝓲𝓷𝓼𝓹𝓲𝓻𝓪𝓭𝓪𝓼 𝓮𝓶 í𝓬𝓸𝓷𝓮𝓼 𝓭𝓪 𝓬𝓾𝓵𝓽𝓾𝓻𝓪 𝓹𝓸𝓹, 𝓬𝓸𝓶 𝓭𝓮𝓼𝓲𝓰𝓷𝓼 ú𝓷𝓲𝓬𝓸𝓼 𝓮 𝓭𝓮 𝓪𝓵𝓽𝓪 𝓺𝓾𝓪𝓵𝓲𝓭𝓪𝓭𝓮. 𝓒𝓪𝓭𝓪 𝓮𝓼𝓽𝓪𝓶𝓹𝓪 é 𝓬𝓻𝓲𝓪𝓭𝓪 𝓬𝓸𝓶 𝓸 𝓶á𝔁𝓲𝓶𝓸 𝓭𝓮 𝓬𝓾𝓲𝓭𝓪𝓭𝓸, 𝓰𝓪𝓻𝓪𝓷𝓽𝓲𝓷𝓭𝓸 𝓺𝓾𝓮 𝓬𝓪𝓭𝓪 𝓬𝓪𝓶𝓲𝓼𝓮𝓽𝓪 𝓼𝓮𝓳𝓪 𝓶𝓪𝓲𝓼 𝓭𝓸 𝓺𝓾𝓮 𝓾𝓶𝓪 𝓹𝓮ç𝓪 𝓭𝓮 𝓻𝓸𝓾𝓹𝓪, 𝓶𝓪𝓼 𝓾𝓶𝓪 𝓯𝓸𝓻𝓶𝓪 𝓭𝓮 𝓮𝔁𝓹𝓻𝓮𝓼𝓼ã𝓸 𝓹𝓮𝓼𝓼𝓸𝓪𝓵 𝓹𝓪𝓻𝓪 𝓸𝓼 𝓰𝓮𝓮𝓴𝓼 𝓭𝓮 𝓽𝓸𝓭𝓸 𝓸 𝓶𝓾𝓷𝓭𝓸. 𝓝𝓸𝓼𝓼𝓪 𝓶𝓲𝓼𝓼ã𝓸 𝓷𝓪 𝓟𝓲𝔁𝓮𝓵 𝓣𝓮𝓮𝓼 é 𝓸𝓯𝓮𝓻𝓮𝓬𝓮𝓻 𝓪𝓸𝓼 𝓮𝓷𝓽𝓾𝓼𝓲𝓪𝓼𝓽𝓪𝓼 𝓭𝓪 𝓬𝓾𝓵𝓽𝓾𝓻𝓪 𝓰𝓮𝓮𝓴 𝓹𝓻𝓸𝓭𝓾𝓽𝓸𝓼 𝓭𝓮 𝓪𝓵𝓽𝓪 𝓺𝓾𝓪𝓵𝓲𝓭𝓪𝓭𝓮 𝓺𝓾𝓮 𝓹𝓮𝓻𝓶𝓲𝓽𝓪𝓶 𝓮𝔁𝓹𝓻𝓮𝓼𝓼𝓪𝓻 𝓼𝓾𝓪 𝓹𝓪𝓲𝔁ã𝓸 𝓮 𝓹𝓮𝓻𝓼𝓸𝓷𝓪𝓵𝓲𝓭𝓪𝓭𝓮. 𝓠𝓾𝓮𝓻𝓮𝓶𝓸𝓼 𝓼𝓮𝓻 𝓪 𝓶𝓪𝓻𝓬𝓪 𝓭𝓮 𝓻𝓮𝓯𝓮𝓻ê𝓷𝓬𝓲𝓪 𝓹𝓪𝓻𝓪 𝓪𝓺𝓾𝓮𝓵𝓮𝓼 𝓺𝓾𝓮 𝓿𝓮𝓮𝓶 𝓸 𝓾𝓷𝓲𝓿𝓮𝓻𝓼𝓸 𝓰𝓮𝓮𝓴 𝓬𝓸𝓶𝓸 𝓹𝓪𝓻𝓽𝓮 𝓯𝓾𝓷𝓭𝓪𝓶𝓮𝓷𝓽𝓪𝓵 𝓭𝓮 𝓼𝓾𝓪𝓼 𝓿𝓲𝓭𝓪𝓼, 𝓹𝓻𝓸𝓹𝓸𝓻𝓬𝓲𝓸𝓷𝓪𝓷𝓭𝓸 𝓷ã𝓸 𝓪𝓹𝓮𝓷𝓪𝓼 𝓻𝓸𝓾𝓹𝓪𝓼, 𝓶𝓪𝓼 𝓾𝓶𝓪 𝓬𝓸𝓷𝓮𝔁ã𝓸 𝓬𝓸𝓶 𝓼𝓮𝓾𝓼 𝓶𝓾𝓷𝓭𝓸𝓼 𝓯𝓪𝓿𝓸𝓻𝓲𝓽𝓸𝓼.</p>
+            <h2>Sobre a Loja</h2>
+            <p>Bem-vindo à Pixel Tees, onde a moda encontra a paixão pelo universo geek. Nossas peças são pensadas em detalhes, garantindo conforto e estilo para os nossos clientes. Mergulhe nesse universo excitante e descubra como uma camiseta pode transformar seu estilo e mostrar um pouco da sua personalidade.</p>
         </div>
     </section>
 
-    <section class="section produtos">
+    <section class="section produtos" id="camisetas">
+        <h2>Camisetas</h2>
         <div class="produto">
-            <img src="./81ebef4165eee10da7e27d5047132291.jpg" alt="Produto 1">
-            <h3>Camiseta geek de vários tamanhos</h3>
-            <p>R$199</p>
-            <button onclick="addToCart('Produto 1', './81ebef4165eee10da7e27d5047132291.jpg')">Adicionar ao Carrinho</button>
+            <img src="./f.jpg" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="./g.jpg" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
+        </div>
+
+         <div class="produto">
+            <img src="./h.jpg" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
+        </div>
+
+    <section class="section produtos" id="blusas">
+        <h2>Blusas</h2>
+        <div class="produto">
+            <img src="./blusa g.jpg" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
         </div>
         <div class="produto">
-            <img src="./d4dfffa881f251b9570ca03cea7cc46e.jpg" alt="Produto 2">
-            <h3>Camiseta geek de vários tamanhos</h3>
-            <p>R$140</p>
-            <button onclick="addToCart('Produto 2', './d4dfffa881f251b9570ca03cea7cc46e.jpg')">Adicionar ao Carrinho</button>
+            <img src="./blusa h.webp" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
         </div>
+
         <div class="produto">
-            <img src="./df996422672dd0b7cdc085a933c34b59.jpg" alt="Produto 3">
-            <h3>Camiseta geek de vários tamanhos</h3>
-            <p>R$150</p>
-            <button onclick="addToCart('Produto 3', './df996422672dd0b7cdc085a933c34b59.jpg')">Adicionar ao Carrinho</button>
+            <img src="./blusa n.webp" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
         </div>
+
+    <section class="section produtos" id="calcas">
+        <h2>Calças</h2>
         <div class="produto">
-            <img src="./513c0cd177256eaac9e8bd22f25740a2.jpg" alt="Produto 4">
-            <h3>Camiseta geek de vários tamanhos</h3>
-            <p>R$159</p>
-            <button onclick="addToCart('Produto 4', './513c0cd177256eaac9e8bd22f25740a2.jpg')">Adicionar ao Carrinho</button>
+            <img src="./calça g.webp" alt="Produto 3">
+            <h3>Produto 3</h3>
+            <p>Descrição do Produto 3</p>
+            <button onclick="addToCart('Produto 3')">Adicionar ao Carrinho</button>
         </div>
-    </section>
+
+        <div class="produto">
+            <img src="./calça q.jpeg" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="./calçah.webp" alt="Produto 2">
+            <h3>Produto 2</h3>
+            <p>Descrição do Produto 2</p>
+            <button onclick="addToCart('Produto 2')">Adicionar ao Carrinho</button>
+        </div>
+
 </div>
 
-<div class="message" id="message">Produto adicionado ao carrinho!</div>
-
-<footer class="footer">
-    <a href="https://www.instagram.com" target="_blank">instagram</a>
-    <a href="https://www.youtube.com" target="_blank">YouTube</a>
-</footer>
+<div class="footer">
+    <a href="https://www.instagram.com" target="_blank"><img src="instagram.png" alt="Instagram" style="width: 30px; height: 30px;"> Instagram</a>
+    <a href="https://www.youtube.com" target="_blank"><img src="youtube.png" alt="YouTube" style="width: 30px; height: 30px;"> YouTube</a>
+</div>
 
 <script>
-    let cartCount = 0;
-    let cartItems = [];
+    let cart = [];
+    const cartMenu = document.getElementById('cart-menu');
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const emptyCartMessage = document.getElementById('empty-cart-message');
 
-    function addToCart(productName, productImage) {
-        cartCount++;
-        document.getElementById('cart-count').innerText = cartCount;
-        cartItems.push({name: productName, image: productImage});
-        updateCartMenu();
-        showMessage();
+    function toggleCartMenu() {
+        cartMenu.classList.toggle('active');
     }
 
-    function removeFromCart(index) {
-        cartCount--;
-        document.getElementById('cart-count').innerText = cartCount;
-        cartItems.splice(index, 1);
-        updateCartMenu();
+    function addToCart(productName) {
+        cart.push(productName);
+        updateCart();
+        showMessage(`Adicionado ao carrinho: ${productName}`);
     }
 
-    function updateCartMenu() {
-        const cartMenu = document.getElementById('cart-items');
-        cartMenu.innerHTML = '';
-        cartItems.forEach((item, index) => {
+    function updateCart() {
+        cartCount.textContent = cart.length;
+        cartItems.innerHTML = '';
+        cart.forEach(item => {
             const li = document.createElement('li');
-            li.innerHTML = `<img src="${item.image}" alt="${item.name}"> ${item.name} <button onclick="removeFromCart(${index})">Remover</button>`;
-            cartMenu.appendChild(li);
+            li.textContent = item;
+            cartItems.appendChild(li);
         });
+        if (cart.length === 0) {
+            emptyCartMessage.style.display = 'block';
+        } else {
+            emptyCartMessage.style.display = 'none';
+        }
     }
 
-    function showMessage() {
-        const message = document.getElementById('message');
-        message.style.display = 'block';
+    function showMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        messageElement.textContent = message;
+        document.body.appendChild(messageElement);
+        messageElement.style.display = 'block';
         setTimeout(() => {
-            message.style.display = 'none';
+            messageElement.style.display = 'none';
+            document.body.removeChild(messageElement);
         }, 2000);
     }
 
-    function toggleCartMenu() {
-        const cartMenu = document.getElementById('cart-menu');
-        cartMenu.classList.toggle('active');
+    function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
     }
 </script>
-
 </body>
 </html>
